@@ -70,7 +70,6 @@ return [
 
         'role_has_permissions' => 'role_has_permissions',
     ],
-
     'column_names' => [
         /*
          * Change this if you want to name the related pivots other than defaults

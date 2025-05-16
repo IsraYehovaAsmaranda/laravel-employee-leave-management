@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\HasActiveScope;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,17 +14,19 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasRoles, HasUuids, HasFactory, Notifiable;
+    use HasApiTokens, HasRoles, HasUuids, HasFactory, Notifiable, HasActiveScope;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+    protected $guard_name = "api";
     protected $fillable = [
         'name',
         'email',
         'password',
+        'is_active',
     ];
 
     // protected $casts = [

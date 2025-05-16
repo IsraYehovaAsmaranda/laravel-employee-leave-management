@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +14,11 @@ Route::prefix("/auth")->controller(AuthController::class)->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
+    Route::controller(UserController::class)->group(function () {
+        Route::get("/users", "index");
+        Route::get("/users/{id}", "show");
+        Route::post("/users", "store");
+        Route::put("/users/{id}", "update");
+        Route::delete("/users/{id}", "destroy");
     });
 });
