@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IntervieweeController;
+use App\Http\Controllers\IntervieweeTaskController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/auth")->controller(AuthController::class)->group(function () {
@@ -57,5 +57,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put("/{interviewee}", "update");
         Route::delete("/{interviewee}", "destroy");
         Route::get("/all", "indexNoPagination");
+    });
+
+    Route::prefix("/interviewee-tasks")->controller(IntervieweeTaskController::class)->group(function () {
+        Route::get("", "index");
+        Route::get("/{intervieweeTask}", "show");
+        Route::post("", "store");
+        Route::put("/{intervieweeTask}", "update");
+        Route::delete("/{intervieweeTask}", "destroy");
     });
 });

@@ -58,7 +58,6 @@ class IntervieweeController extends Controller
             $path = $request->file("cv")->store("interviewees", "public");
             $data["cv"] = $path;
         }
-        // dd($data);
 
         $interviewee = Interviewee::create($data);
         return ApiResponse::send($interviewee, "Successfully created interviewee");

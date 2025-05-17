@@ -24,4 +24,9 @@ class Task extends Model
         "criteria" => "array",
         "due_date" => "datetime"
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(IntervieweeTask::class);
+    }
 }

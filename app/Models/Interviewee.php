@@ -24,4 +24,9 @@ class Interviewee extends Model
     protected $casts = [
         'metadata' => 'array'
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(IntervieweeTask::class);
+    }
 }
