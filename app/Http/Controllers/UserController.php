@@ -58,8 +58,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $this->authorize("view", User::class);
         $user = User::findOrFail($id);
+        $this->authorize("view", $user);
         return ApiResponse::send($user, "Successfully fetch user data by id");
     }
 
@@ -68,10 +68,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $this->authorize("update", User::class);
         $user = User::findOrFail($id);
-
-
+        $this->authorize("update", $user);
         $user->update($request->all());
         return ApiResponse::send($user, "Successfully updated user");
     }
@@ -81,10 +79,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize("delete", User::class);
         $user = User::findOrFail($id);
+        $this->authorize("delete", $user);
         $user->is_active = false;
         $user->save();
         return ApiResponse::send($user, "Successfully deleted user");
+    }
+
+    public function indexNoPagination() {
+        $this->authorize("viewAny", User::class);
+        $users = User::all();
+        return ApiResponse::send($users, "Successfully fetch user data");
     }
 }
