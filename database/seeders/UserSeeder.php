@@ -31,10 +31,30 @@ class UserSeeder extends Seeder
             'read-user',
             'update-user',
             'delete-user',
+
             'create-role',
             'read-role',
             'update-role',
-            'delete-role'
+            'delete-role',
+        ];
+
+        $sharedPermissions = [
+            'read-role',
+
+            'create-task',
+            'read-task',
+            'update-task',
+            'delete-task',
+
+            'create-interviewee',
+            'read-interviewee',
+            'update-interviewee',
+            'delete-interviewee',
+
+            'create-intervieweeTask',
+            'read-intervieweeTask',
+            'update-intervieweeTask',
+            'delete-intervieweeTask',
         ];
 
         $adminPermissionObjects = [];
@@ -45,13 +65,16 @@ class UserSeeder extends Seeder
             );
         }
 
-        $adminRole->syncPermissions($adminPermissionObjects);
+        $sharedPermissionObjects = [];
+        foreach ($sharedPermissions as $permissionName) {
+            $sharedPermissionObjects[] = Permission::firstOrCreate(
+                ['name' => $permissionName, 'guard_name' => 'api'],
+                ['id' => (string) Str::uuid()]
+            );
+        }
 
-        $readRolePermission = Permission::firstOrCreate(
-            ['name' => 'read-role', 'guard_name' => 'api'],
-            ['id' => (string) Str::uuid()]
-        );
-        $userRole->syncPermissions([$readRolePermission]);
+        $adminRole->syncPermissions([$adminPermissionObjects, $sharedPermissionObjects]);
+        $userRole->syncPermissions($sharedPermissionObjects);
 
         $admin = User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
