@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IntervieweeController;
 use App\Http\Controllers\IntervieweeTaskController;
@@ -65,5 +66,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("", "store");
         Route::put("/{intervieweeTask}", "update");
         Route::delete("/{intervieweeTask}", "destroy");
+    });
+
+    Route::prefix("audits")->controller(AuditController::class)->group(function () {
+        Route::get("", "index");
+        Route::get("/users", "users");
+        Route::get("/users/{user}", "userById");
+        Route::get("/roles", "roles");
+        Route::get("/roles/{role}", "roleById");
     });
 });

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
         }
 
         $sortOrder = $request->query("direction", "desc");
-        if(!in_array($sortOrder, ["asc", "desc"])) {
+        if (!in_array($sortOrder, ["asc", "desc"])) {
             $sortOrder = "desc";
         }
 
@@ -69,6 +70,12 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::findOrFail($id);
+
+        if ($request->email !== $user->email) {
+            User::where("email", $request->email)->exists() && throw ValidationException::withMessages([
+                'email' => ['Email already exists']
+            ]);
+        }
         $this->authorize("update", $user);
         $user->update($request->all());
         return ApiResponse::send($user, "Successfully updated user");
@@ -86,7 +93,8 @@ class UserController extends Controller
         return ApiResponse::send($user, "Successfully deleted user");
     }
 
-    public function indexNoPagination() {
+    public function indexNoPagination()
+    {
         $this->authorize("viewAny", User::class);
         $users = User::all();
         return ApiResponse::send($users, "Successfully fetch user data");
