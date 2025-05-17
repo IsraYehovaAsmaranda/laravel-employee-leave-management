@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->date("due_date");
             $table->json("criteria");
-            $table->string("attachment")->nullable();
+            $table->string("attachment");
             $table->softDeletes();
             $table->timestamps();
         });

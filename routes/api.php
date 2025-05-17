@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IntervieweeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
@@ -47,5 +48,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete("/{task}", "destroy");
         Route::get("/all", "indexNoPagination");
         Route::get("/{task}/attachment", "downloadAttachment");
+    });
+
+    Route::prefix("/interviewees")->controller(IntervieweeController::class)->group(function () {
+        Route::get("", "index");
+        Route::get("/{interviewee}", "show");
+        Route::post("", "store");
+        Route::put("/{interviewee}", "update");
+        Route::delete("/{interviewee}", "destroy");
+        Route::get("/all", "indexNoPagination");
     });
 });

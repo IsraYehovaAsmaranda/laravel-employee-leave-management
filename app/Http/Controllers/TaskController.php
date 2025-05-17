@@ -99,7 +99,10 @@ class TaskController extends Controller
     {
         $this->authorize("delete", $task);
         $task->delete();
-        return ApiResponse::send($task, "Successfully deleted task");
+        $response = [
+            "deleted_at" => $task->deleted_at
+        ];
+        return ApiResponse::send($response, "Successfully deleted task");
     }
 
     public function indexNoPagination()
