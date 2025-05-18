@@ -25,6 +25,7 @@ class AuthController extends Controller
 
         return ApiResponse::send([
             "token" => $token,
+            "user" => $user,
             "roles" => $user->getRoleNames(),
             "permission" => $user->getAllPermissions()->pluck("name")
         ], "Login successfully");
@@ -49,6 +50,7 @@ class AuthController extends Controller
 
         return ApiResponse::send([
             "token" => $token,
+            "user" => $user,
             "roles" => $user->getRoleNames(),
             "permission" => $user->getAllPermissions()->pluck(value: "name")
         ], "Token refresh successfully");

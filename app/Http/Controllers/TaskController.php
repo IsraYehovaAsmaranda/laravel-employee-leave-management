@@ -22,7 +22,7 @@ class TaskController extends Controller
         $query = Task::query();
 
         if (request()->has("search")) {
-            $query->where("name", "like", "%" . request()->search . "%")
+            $query->where("title", "like", "%" . request()->search . "%")
                 ->orWhere("description", "like", "%" . request()->search . "%");
         }
 
