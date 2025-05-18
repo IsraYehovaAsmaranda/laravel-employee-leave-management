@@ -82,7 +82,7 @@ class IntervieweeTaskController extends Controller
         }
 
         $intervieweeTask = IntervieweeTask::create($data);
-        return ApiResponse::send($intervieweeTask, "Successfully created interviewee task");
+        return ApiResponse::send($intervieweeTask, "Successfully created interviewee task", 201);
     }
 
     /**

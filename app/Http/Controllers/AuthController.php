@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,21 +23,21 @@ class AuthController extends Controller
 
         $token = $user->createToken("auth")->plainTextToken;
 
-        return response()->json([
+        return ApiResponse::send([
             "token" => $token,
             "roles" => $user->getRoleNames(),
             "permission" => $user->getAllPermissions()->pluck("name")
-        ], 200);
+        ], "Login successfully");
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
+        return ApiResponse::send([
             "message" => "Logout successfully",
             "timeLogout" => now()->format("Y-m-d H:i:s")
-        ], 200);
+        ], "Logout successfully");
     }
 
     public function refreshToken(Request $request)
@@ -46,10 +47,10 @@ class AuthController extends Controller
 
         $token = $user->createToken("auth")->plainTextToken;
 
-        return response()->json([
+        return ApiResponse::send([
             "token" => $token,
             "roles" => $user->getRoleNames(),
             "permission" => $user->getAllPermissions()->pluck(value: "name")
-        ], 200);
+        ], "Token refresh successfully");
     }
 }

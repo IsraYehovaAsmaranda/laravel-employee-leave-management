@@ -60,7 +60,7 @@ class IntervieweeController extends Controller
         }
 
         $interviewee = Interviewee::create($data);
-        return ApiResponse::send($interviewee, "Successfully created interviewee");
+        return ApiResponse::send($interviewee, "Successfully created interviewee", 201);
     }
 
     /**

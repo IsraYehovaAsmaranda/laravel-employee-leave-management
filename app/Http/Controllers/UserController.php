@@ -51,7 +51,7 @@ class UserController extends Controller
     {
         $this->authorize("create", User::class);
         $user = User::create($request->all());
-        return ApiResponse::send($user, "Successfully created user");
+        return ApiResponse::send($user, "Successfully created user", 201);
     }
 
     /**

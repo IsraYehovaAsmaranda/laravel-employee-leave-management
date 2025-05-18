@@ -60,7 +60,7 @@ class RoleController extends Controller
             $role->syncPermissions($request->permissions);
         }
 
-        return ApiResponse::send($role->load('permissions'), "Successfully created role");
+        return ApiResponse::send($role->load('permissions'), "Successfully created role", 201);
     }
 
     /**

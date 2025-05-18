@@ -58,7 +58,7 @@ class TaskController extends Controller
 
 
         $task = Task::create($data);
-        return ApiResponse::send($task, "Successfully created task");
+        return ApiResponse::send($task, "Successfully created task", 201);
     }
 
     /**
