@@ -22,8 +22,8 @@ class TaskController extends Controller
         $query = Task::query();
 
         if (request()->has("search")) {
-            $query->where("title", "like", "%" . request()->search . "%")
-                ->orWhere("description", "like", "%" . request()->search . "%");
+            $query->where("title", "ilike", "%" . request()->search . "%")
+                ->orWhere("description", "ilike", "%" . request()->search . "%");
         }
 
         $sortBy = request()->query("sort_by", "created_at");
